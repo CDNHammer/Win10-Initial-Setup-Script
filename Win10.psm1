@@ -3149,6 +3149,23 @@ Function EnableThumbsDBOnNetwork {
 	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "DisableThumbsDBOnNetworkFolders" -ErrorAction SilentlyContinue
 }
 
+# Disable Automatic Folder Type Discovery
+Function DisableAutoFolderView {
+        Write-Output "Disabling Automatic Folder Type Discovery..."
+        Remove-Item -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU" -Recurse
+        Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags" -Recurse
+        New-Item -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags"
+        New-Item -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders"
+        New-Item -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell"
+        New-ItemProperty -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell" -Name "FolderType" -Value "NotSpecified" -PropertyType "String"
+}
+
+# Enable Automatic Folder Type Discovery
+Function EnableAutoFolderView {
+        Write-Output "Enable Automatic Folder Type Discovery..."
+        Remove-Item -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders" -Recurse
+}
+
 ##########
 #endregion Explorer UI Tweaks
 ##########
