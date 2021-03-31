@@ -1,8 +1,9 @@
 ##########
-# Win 10 / Server 2016 / Server 2019 Initial Setup Script - Main execution loop
-# Author: Disassembler <disassembler@dasm.cz>
-# Version: v3.10, 2020-07-15
-# Source: https://github.com/Disassembler0/Win10-Initial-Setup-Script
+# Win 10 / Server 2016 / Server 2019 Initial Setup Script - Default preset
+# Author: CDNHammer
+# Version: v3.11, 2021-02-27
+# Source: https://github.com/CDNHammer/Win10-Initial-Setup-Script
+# Original Source: https://github.com/Disassembler0/Win10-Initial-Setup-Script
 ##########
 
 # Relaunch the script with administrator privileges

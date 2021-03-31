@@ -1,8 +1,9 @@
 ##########
-# Win 10 / Server 2016 / Server 2019 Initial Setup Script - Tweak library
-# Author: Disassembler <disassembler@dasm.cz>
-# Version: v3.10, 2020-07-15
-# Source: https://github.com/Disassembler0/Win10-Initial-Setup-Script
+# Win 10 / Server 2016 / Server 2019 Initial Setup Script - Default preset
+# Author: CDNHammer
+# Version: v3.11, 2021-02-27
+# Source: https://github.com/CDNHammer/Win10-Initial-Setup-Script
+# Original Source: https://github.com/Disassembler0/Win10-Initial-Setup-Script
 ##########
 
 ##########
@@ -3181,6 +3182,26 @@ Function DisableAutoFolderView {
 Function EnableAutoFolderView {
         Write-Output "Enable Automatic Folder Type Discovery..."
         Remove-Item -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders" -Recurse
+}
+
+# Disable Windows Explorer from showing ZIP files in the sidebar like folders
+Function DisableZipFolders {
+	Write-Output "Disable ZIP files shown like folders in Explorer sidebar..."
+	If (!(Test-Path "HKCR:")) {
+		New-PSDrive -Name "HKCR" -PSProvider "Registry" -Root "HKEY_CLASSES_ROOT" | Out-Null
+	}
+	Remove-Item -Path "HKCR:\CompressedFolder\CLSID" -Recurse -ErrorAction SilentlyContinue
+	Remove-Item -Path "HKCR:\SystemFileAssociations\.zip\CLSID" -Recurse -ErrorAction SilentlyContinue
+}
+
+# Enable Windows Explorer showing ZIP files in the sidebar like folders
+Function EnableZipFolders {
+	Write-Output "Enable ZIP files shown like folders in Explorer sidebar..."
+	If (!(Test-Path "HKCR:")) {
+		New-PSDrive -Name "HKCR" -PSProvider "Registry" -Root "HKEY_CLASSES_ROOT" | Out-Null
+	}
+	New-ItemProperty -Path "HKCR:\CompressedFolder" -Name "CLSID" -Value "{E88DCCE0-B7B3-11d1-A9F0-00AA0060FA31}" -Type "String"
+	New-ItemProperty -Path "HKCR:\SystemFileAssociations\.zip" -Name "CLSID" -Value "{E88DCCE0-B7B3-11d1-A9F0-00AA0060FA31}" -Type "String"
 }
 
 ##########
