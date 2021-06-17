@@ -2474,17 +2474,15 @@ Function EnableLanguageHotKey {
 Function DisableWeatherNewsTaskbar {
 	Write-Output "Disabling Weather and News Taskbar..."
 	If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds")) {
-		New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows\Windows Feeds" -Force | Out-Null
+		New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds" -Force | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -Type DWord -Value 0
 }
 
 Function EnableWeatherNewsTaskbar {
 	Write-Output "Enabling Weather and News Taskbar..."
-	If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds")) {
-		Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -ErrorAction SilentlyContinue
-	}
-	
+	Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -ErrorAction SilentlyContinue
+	Remove-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds" -ErrorAction SilentlyContinue
 }
 
 
