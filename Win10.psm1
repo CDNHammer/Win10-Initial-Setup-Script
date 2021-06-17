@@ -2470,6 +2470,24 @@ Function EnableLanguageHotKey {
 }
 
 
+# Disable the Windows 10 June 2021 update feature of weather and news on the taskbar
+Function DisableWeatherNewsTaskbar {
+	Write-Output "Disabling Weather and News Taskbar..."
+	If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds")) {
+		New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows\Windows Feeds" -Force | Out-Null
+	}
+	Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -Type DWord -Value 0
+}
+
+Function EnableWeatherNewsTaskbar {
+	Write-Output "Enabling Weather and News Taskbar..."
+	If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds")) {
+		Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -ErrorAction SilentlyContinue
+	}
+	
+}
+
+
 
 ##########
 #endregion UI Tweaks
